@@ -452,7 +452,7 @@ input[type="submit"] {
     /* Apply styles only for mobile phones */
   
     /* Positioning the sections */
-    .section:nth-child(n) {
+    .section {
         transform: none;
         opacity: 1;
     }
