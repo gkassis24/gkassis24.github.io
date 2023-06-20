@@ -217,6 +217,11 @@ SEE MORE EXPERIENCES</div>
 
       line.style.display = 'block';
       window.addEventListener('scroll', scrollHandler);
+
+      window.addEventListener('load', function() {
+        const header_container = document.getElementById('header-container');
+        header_container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
       
       document.addEventListener('DOMContentLoaded', function() {
         moveText(window.scrollY)
