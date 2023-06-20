@@ -450,6 +450,8 @@ input[type="submit"] {
 
 @media only screen and (max-width: 767px) {
     /* Apply styles only for mobile phones */
+  
+    /* Positioning the sections */
     .section:nth-child(n) {
         transform: none;
         opacity: 1;
