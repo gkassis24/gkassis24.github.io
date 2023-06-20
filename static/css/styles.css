@@ -446,3 +446,12 @@ input[type="submit"] {
     white-space: pre;
     transition: transform 600ms, opacity 600ms;
 }
+
+
+@media only screen and (max-width: 767px) {
+    /* Apply styles only for mobile phones */
+    .section:nth-child(n) {
+        transform: none;
+        opacity: 1;
+    }
+  }
