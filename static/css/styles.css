@@ -456,4 +456,8 @@ input[type="submit"] {
         transform: none !important;
         opacity: 1 !important;
     }
+
+    .end-text {
+        opacity: 0;
+    }
   }
