@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>George Kassis</title>
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div id="header">
+    <div class="header-container">
+        <div id="header_name_logo" class="name">George Kassis</div>
+        <div class="nav-links">
+            <a id="header_home_link" href="index.html">Home</a>
+            <a id="header_experiences_link" href="#" class="dropdown-link">Experiences</a>
+            <div class="dropdown">
+                <div class="dropdown-content">
+                    <a href="medical_experience.html">Medicine</a>
+                    <a href="research_experience.html">Research</a>
+                    <a href="data_science_experience.html">Data Science and ML</a>
+                    <a href="tutoring_experience.html">Tutoring</a>
+                </div>
+            </div>
+            <a id="header_contact_me_link" href="contact_me.html">Contact Me</a>
+            <a id="header_download_resume_link" href="CV_pdf/CV_George_Kassis.pdf" style="white-space: pre;" download> Download CV <img id="download_icon_pic" src="static/images/download_icon.jpg" alt="Download Icon"> </a>
+        </div>
+    </div>
+  </div>
+
+
+    <form id="contact_me_form" action="https://formspree.io/f/mayzrpva" method="POST">
+        <h1>Contact Me</h1>
+        <div class="contact-container">
+            <label for="full-name" id="full_name_label">Full Name:</label>
+            <div id="full_name_and_prefix_div" class="form-group">
+                <select id="name-prefix" name="name-prefix">
+                    <option value="Mr.">Mr.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Dr.">Miss</option>
+                    <option value="Ms.">Mx.</option>
+                    <option value="Dr.">Dr.</option>
+                    <option value="Dr.">Prof.</option>
+                </select>
+                <input type="text" id="full-name" name="full-name" placeholder="First and Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="email@domain.com" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" placeholder="Message" required></textarea>
+            </div>
+            <div class="g-recaptcha" data-sitekey="6LdTDKsmAAAAAL5bsR3tAei_uELetKOSsMOY9NoU"></div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+
+    <footer class="disclaimer">
+      <p>
+        Disclaimer: The content provided on this portfolio website is for informational and illustrative purposes only. Any references to educational institutions, organizations, or past work experiences are based on the author's personal experiences and recollections. The author does not intend to make any official or legal claims on behalf of these institutions or organizations. All information provided is accurate to the best of the author's knowledge and belief, but it is recommended that readers verify details independently for accuracy and completeness. The author is not responsible for any errors, omissions, or outdated information presented on this website. Any views, opinions, or representations expressed in this portfolio are solely those of the author and do not reflect the views of any mentioned institutions or organizations.
+      </p>
+    </footer>
+
+    <script>
+        window.onload = function() { 
+            var el = document.getElementById('g-recaptcha-response'); 
+            if (el) { 
+                el.setAttribute('required', 'required'); 
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
+

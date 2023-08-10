@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>George Kassis</title>
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div id="header">
+    <div class="header-container">
+      <div id="header_name_logo" class="name">George Kassis</div>
+      <div class="nav-links">
+        <a id="header_home_link" href="index.html">Home</a>
+        <a id="header_experiences_link" href="#" class="dropdown-link">Experiences</a>
+        <div class="dropdown">
+          <div class="dropdown-content">
+            <a href="medical_experience.html">Medicine</a>
+            <a href="research_experience.html">Research</a>
+            <a href="data_science_experience.html">Data Science and ML</a>
+            <a href="tutoring_experience.html">Tutoring</a>
+          </div>
+        </div>
+        <a id="header_contact_me_link" href="contact_me.html">Contact Me</a>
+        <a id="header_download_resume_link" href="CV_pdf/CV_George_Kassis.pdf" style="white-space: pre;" download> Download CV <img id="download_icon_pic" src="static/images/download_icon.jpg" alt="Download Icon"> </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class= "experience_page_container">
+      <div id="experience_page_header">
+          <h1 id="experience_page_header_h1">Medical Experience</h1>
+          <p id="experience_page_header_p">At the heart of my journey lies the realm of medicine. My overarching passion is to revolutionize patient care through a harmonious fusion of cutting-edge research, compassionate healthcare, and innovative medical solutions. This vision serves as the driving force behind my research and machine learning pursuits, acting as complementary forces. Rooted in an unwavering dedication to patient-centered care and a profound belief in the transformative potential of collaborative science, my voyage within the world of medicine has been a source of profound transformation and inspiration.</p>
+      </div>
+      <div class="timeline">
+          <div class="line"></div>
+          <div class="end-text">KEEP SCROLLING DOWN TO
+SEE MORE EXPERIENCES</div>
+      </div>
+  </div>
+
+
+  <footer class="disclaimer">
+    <p>
+      Disclaimer: The content provided on this portfolio website is for informational and illustrative purposes only. Any references to educational institutions, organizations, or past work experiences are based on the author's personal experiences and recollections. The author does not intend to make any official or legal claims on behalf of these institutions or organizations. All information provided is accurate to the best of the author's knowledge and belief, but it is recommended that readers verify details independently for accuracy and completeness. The author is not responsible for any errors, omissions, or outdated information presented on this website. Any views, opinions, or representations expressed in this portfolio are solely those of the author and do not reflect the views of any mentioned institutions or organizations.
+    </p>
+  </footer>
+
+    
+  <script>
+
+      const timeline = document.querySelector('.timeline');
+
+      // Array of medical experience data
+      const researchData = [
+          {
+              date: 'August 2023',
+              image: '',
+              position_location: 'Beginning Medical School',
+              description: 'Stepping into the world of medical education, I approach each lecture, interaction, and clinical experience with a deep sense of dedication. This moment marks the realization of a long-held dream, and I am committed to making the most of every opportunity as I embark on this transformative journey. With unwavering passion, I am eager to embrace the challenges, expand my knowledge, and contribute to the ever-evolving landscape of medicine.',
+          },
+          {
+              date: 'May 2021',
+              image: '',
+              position_location: 'ICARE STAR Recognition from the University of Rochester Medical Center – Rochester, NY',
+              description: 'I was deeply honored to receive the ICARE STAR recognition from hospital leadership, a heartfelt acknowledgment of my meaningful volunteering contributions at the University of Rochester Medical Center. I hold this recognition with profound appreciation, particularly as it comes from a year that challenged the resilience of communities worldwide.',
+          },
+          {
+              date: 'January 2021 – June 2021',
+              image: '',
+              position_location: 'Patient Care Volunteer at Saunders Research Building COVID-19 Vaccination Clinics - Rochester, NY',
+              description: 'Amidst the turbulence of the COVID-19 pandemic, I found my anchor in providing a steady guiding hand to help individuals navigate through their vaccination journey. My responsibilities spanned from facilitating check-ins and assembling necessary forms to directing patients through waiting lines and post-vaccination monitoring areas. However, my role transcended mere logistical support; I sought to ease concerns by offering educational brochures and encouragement. Throughout this experience, I bore witness to the extraordinary altruism of those dedicated to receiving the vaccine, not solely for their own well-being, but to safeguard the health of their communities. I became acutely aware of the potent symphony that compassion orchestrates in the realm of healing, an epiphany that empowered my dedication to medicine.',
+          },
+          {
+              date: 'August 2019 – December 2019',
+              image: '',
+              position_location: 'Clinical Volunteer with Friends of Strong Memorial Hospital – Rochester, NY',
+              description: 'In the heart of Strong Memorial Hospital\'s pediatric emergency department, I began my wholeheartedly engagement in the art of healing, delving into the intricate realm of comprehensive patient care. As a Patient Care Volunteer, I assumed the role of a steadfast support pillar, extending both physical aid and emotional solace. Whether it was transporting patients, promptly responding to call bells, or using toys to entertain children and alleviate their anxiety, I came to a profound realization – true healing extends far beyond the individual patient. It envelopes their entire support network, including families and communities. In the midst of my service, I bore witness to the ripple effect of parental frustration, which often cast a shadow on the well-being of their children. This underscored the paramount importance of cultivating a nurturing and supportive environment. This revelation has now become my guiding light, steering me toward a path defined by holistic care. A care that not only tends to the patient\'s immediate needs but also nurtures a robust support system capable of providing unwavering comfort and stability.',
+          }
+          // Add more data entries as needed
+      ];
+
+      researchData.forEach((data, index) => {
+          const section = document.createElement('div');
+          section.className = 'section';
+          timeline.appendChild(section);
+
+          const bead = document.createElement('div');
+          bead.className = 'bead';
+          section.appendChild(bead);
+
+          const content = document.createElement('div');
+          content.className = 'content';
+          section.appendChild(content);
+
+          const date = document.createElement('div');
+          date.className = 'date';
+          section.appendChild(date);
+          const dateHeader = document.createElement('h3');
+          dateHeader.innerHTML = `<strong>${data.date}</strong>`;
+          date.appendChild(dateHeader);
+
+          const contentHeader = document.createElement('h3');
+          contentHeader.innerHTML = `<strong>${data.position_location}</strong>`;
+          content.appendChild(contentHeader);
+          if (data.image) {
+              const sectionImage = document.createElement('img');
+              sectionImage.className = 'section_image';
+              sectionImage.src = data.image;
+              content.appendChild(sectionImage);
+          }
+          const contentParagraph = document.createElement('p');
+          contentParagraph.innerHTML = `${data.description}`;
+          content.appendChild(contentParagraph);
+      });
+
+
+      // new endText
+      function moveText(scrollY) {
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const line = document.querySelector('.line');
+        const endText = document.querySelector('.end-text');
+
+        const lineRect = line.getBoundingClientRect();
+        const lineBottom = lineRect.bottom;
+
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        const endTextOffset = 100; // Adjust this value as needed for the desired positioning of the text
+
+        let sectionOnRight = false;
+        let sectionOnLeft = false;
+
+        // Check if any section is next to the bottom of the line
+        for (let i = 0; i < sections.length; i++) {
+
+            const section = sections[i];
+            const sectionRect = section.getBoundingClientRect();
+            const sectionBottom = sectionRect.bottom;
+            const sectionTop = sectionRect.top;
+            const content = section.querySelector('.content');
+            const contentRect = content.getBoundingClientRect();
+            const sectionLeft = contentRect.left;
+            const sectionRight = contentRect.right;
+
+            if ((lineBottom >= sectionTop) && (lineBottom <= sectionBottom)) {
+                if (i == (sections.length - 1)) {
+                    endText.style.opacity = '0';
+                }
+                if (sectionLeft < windowWidth/2){
+                    sectionOnLeft = true;
+                } else if (sectionRight > windowWidth/2){
+                    sectionOnRight = true;
+                }
+                break;
+            }
+        }
+
+        if (sectionOnRight) {
+            endText.style.transform = 'translateX(-50%)';
+        } else if (sectionOnLeft) {
+            endText.style.transform = 'translateX(50%)';
+        } else {
+            endText.style.transform = 'translateX(0)';
+        }
+
+    }
+
+
+
+
+      "use strict";
+
+      function qs(selector, all = false) {
+      return all ? document.querySelectorAll(selector) : document.querySelector(selector);
+      }
+
+      const sections = qs('.section', true); 
+      const line = qs('.line');
+      const endText = qs('.end-text'); //new endText
+      line.style.bottom = `calc(100% - 20px)`;
+      endText.style.bottom = `calc(100% - 20px)`; //new endText
+      let prevScrollY = window.scrollY;
+      let up, down;
+      let full = false;
+      let set = 0;
+      const targetY = window.innerHeight * .8;
+
+      function scrollHandler(e) {
+        const scrollY = window.scrollY;
+        up = scrollY < prevScrollY;
+        down = !up;
+        const timelineRect = timeline.getBoundingClientRect();
+        const lineRect = line.getBoundingClientRect(); // const lineHeight = lineRect.bottom - lineRect.top;
+
+        const dist = targetY - timelineRect.top;
+
+        if (down && !full) {
+            set = Math.max(set, dist);
+            line.style.bottom = `calc(100% - ${set}px)`;
+            endText.style.bottom = `calc(100% - ${set}px - 40px)`; //new endText
+        }
+
+        if (dist > timeline.offsetHeight + 50 && !full) {
+            full = true;
+            line.style.bottom = `-50px`;
+        }
+
+        sections.forEach(item => {
+            // console.log(item);
+            const rect = item.getBoundingClientRect(); //     console.log(rect);
+
+            if (rect.top + item.offsetHeight / 5 < targetY) {
+                item.style.display='flex'
+                item.classList.add('show-me');
+            }
+        }); // console.log(up, down);
+
+        moveText(scrollY); //new endText
+
+        prevScrollY = window.scrollY;
+      }
+
+      line.style.display = 'block';
+      window.addEventListener('scroll', scrollHandler);
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        moveText(window.scrollY)
+        scrollHandler();
+    });
+    
+  </script>
+
+
+
+
+</body>
+
+</html>
+
+

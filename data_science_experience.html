@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>George Kassis</title>
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div id="header">
+    <div class="header-container">
+      <div id="header_name_logo" class="name">George Kassis</div>
+      <div class="nav-links">
+        <a id="header_home_link" href="index.html">Home</a>
+        <a id="header_experiences_link" href="#" class="dropdown-link">Experiences</a>
+        <div class="dropdown">
+          <div class="dropdown-content">
+            <a href="medical_experience.html">Medicine</a>
+            <a href="research_experience.html">Research</a>
+            <a href="data_science_experience.html">Data Science and ML</a>
+            <a href="tutoring_experience.html">Tutoring</a>
+          </div>
+        </div>
+        <a id="header_contact_me_link" href="contact_me.html">Contact Me</a>
+        <a id="header_download_resume_link" href="CV_pdf/CV_George_Kassis.pdf" style="white-space: pre;" download> Download CV <img id="download_icon_pic" src="static/images/download_icon.jpg" alt="Download Icon"> </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class= "experience_page_container">
+      <div id="experience_page_header">
+          <h1 id="experience_page_header_h1">Data Science and ML Experience</h1>
+          <p id="experience_page_header_p">In my journey through Data Science and Machine Learning, each experience has been an exploration of a world where data transcends its informational role, evolving into a potent agent of transformative change. My path in this dynamic field has been intricately woven with my interests in medical and research applications, strategically integrating data analysis and machine learning to advance patient care, diagnostics, and treatment methodologies. This integration seamlessly aligns with my broader mission, where data-driven precision intersects with medical and research contexts to fuel innovative advancements in healthcare and scientific exploration.</p>
+      </div>
+      <div class="timeline">
+          <div class="line"></div>
+          <div class="end-text">KEEP SCROLLING DOWN TO
+SEE MORE EXPERIENCES</div>
+      </div>
+  </div>
+
+  <footer class="disclaimer">
+    <p>
+      Disclaimer: The content provided on this portfolio website is for informational and illustrative purposes only. Any references to educational institutions, organizations, or past work experiences are based on the author's personal experiences and recollections. The author does not intend to make any official or legal claims on behalf of these institutions or organizations. All information provided is accurate to the best of the author's knowledge and belief, but it is recommended that readers verify details independently for accuracy and completeness. The author is not responsible for any errors, omissions, or outdated information presented on this website. Any views, opinions, or representations expressed in this portfolio are solely those of the author and do not reflect the views of any mentioned institutions or organizations.
+    </p>
+  </footer>
+  
+  <script>
+
+      const timeline = document.querySelector('.timeline');
+
+      // Array of research experience data
+      const researchData = [
+          {
+              date: 'January 2023 – Present',
+              image: '',
+              position_location: 'Independent Data Analysis',
+              description: 'Seamlessly intertwining my medical and research expertise, I offer data analysis and programming as services where I leverage my skills to deliver insightful solutions and uncover meaningful insights from data. Whether it\'s developing algorithms to extract patterns, conducting statistical analyses to extract meaningful trends, or creating visualizations that bring data to life, my proficiency in data analysis and programming enables me to contribute effectively to projects that require rigorous analysis and interpretation.',
+          },
+          {
+              date: 'June 2022 - November 2022',
+              image: '',
+              position_location: 'Political Data Coordinator - Remote | Washington, DC',
+              description: 'As a Political Data Coordinator at The Pivot Group, I analyzed demographic and voting trends within various communities across the United States. This data was then used to guide effective campaign strategies for candidates participating in the 2022 Midterm Elections. In particular, I utilized tools such as Excel and IBM SPSS to store, preprocess, and statistically evaluate extensive lists of potential voters, strategically optimizing voting turnout for client candidates. In addition, I contributed to the assessment of the prediction accuracy of several machine learning models, including boosted decision trees and random forests, with regard to voters’ propensity and partisanship scores. My responsibilities extended beyond data analysis, embracing the realm of coordination as I employed a practical yet innovative approach by implementing a Python algorithm alongside a user-friendly Graphical User Interface. This dynamic solution streamlined the coordination of over 500 tasks, enhancing the efficiency and collaboration between different teams within the company. On a weekly basis, I also queried USPS databases to track over 10 million mail letters through printing facilities and monitor their reception by households. In tandem, I conducted several statistical analyses that unveiled vivid visualizations of demographics and voting history at the state, county, and district levels, empowering our clients with strategic insights that galvanized campaigns\' directions.',
+          },
+          {
+              date: 'August 2021 - August 2022',
+              image: '',
+              position_location: 'Research Assistant and Data Analyst in the Thakar Lab at the University of Rochester Medical Center - Rochester, NY',
+              description: 'In my position at the Thakar lab, I built upon the work that I started in 2021 during a summer undergraduate research fellowship. Particularly, I led an independent research project where I constructed computational models of certain gene regulatory networks in B cells and investigated their response at the single-cell level in disease and health. This work entailed sourcing network topologies from scientific databases, procuring gene annotations via the Ensembl genome database project\'s Perl API, and utilizing R and Python to process intricate single-cell RNA expression datasets. Employing techniques like Principal Component Analysis (PCA) and clustering methods such as K-means, t-SNE, and UMAP, I studied gene expression patterns. I also used a genetic algorithm to simulate immune cell activation in various patient conditions including HIV, breast cancer, lung cancer, and COVID-19. Moreover, to validate the significance of my findings, I employed statistical tests such as Chi-squared, t-test, and ANOVA. My engagement extended beyond research as I actively participated in weekly lab meetings, where I honed my skills in analyzing scientific literature, exchanged research progress updates, and incorporated insights from fellow lab members\' projects.',
+          },
+          {
+              date: 'February 2020 - May 2022',
+              image: '',
+              position_location: 'Research Assistant at the University of Rochester Center for Advanced Brain Imaging and Neurophysiology - Rochester, NY',
+              description: 'Under the guidance of Dr. Edward G. Freedman and a Ph.D. mentor, I engaged in hands-on research focused on identifying how the brain allocates cognitive resources and on finding biomarkers for Parkinson’s disease and attention-deficit/hyperactivity disorder. This experience encompassed a range of responsibilities, from meticulously preparing research sessions – involving the setup and synchronization of EEG equipment, OptiTrack motion capture systems, and a Pupil Labs eye tracker – to prepping participants for experiments by applying conductive gel, placing EEG electrodes, and arranging motion capture markers. Vigilantly monitoring EEG signals, I also swiftly addressed technical challenges to maintain data quality throughout the experiments\' sessions. My role at the lab extended beyond data collection as I also performed data archiving and data analysis using MATLAB, Python, and C++. Equipped with a variety of computational skills, I set forth to independently integrate a wearable eye tracker into the lab and trained several classifiers including random forests, support vector machines, and recurrent neural networks to optimize the detection of different types of eye movements recorded.  In addition, I wrote a coding pipeline that used this eye tracker and independent component analysis to accurately filter out eye movements and muscle contractions artifacts from EEG recordings. On a weekly basis, I participated in a journal club where I actively contributed to the lab\'s academic discourse as we critically evaluated recent scientific literature.',
+          }
+          // Add more data entries as needed
+      ];
+
+      researchData.forEach((data, index) => {
+          const section = document.createElement('div');
+          section.className = 'section';
+          timeline.appendChild(section);
+
+          const bead = document.createElement('div');
+          bead.className = 'bead';
+          section.appendChild(bead);
+
+          const content = document.createElement('div');
+          content.className = 'content';
+          section.appendChild(content);
+
+          const date = document.createElement('div');
+          date.className = 'date';
+          section.appendChild(date);
+          const dateHeader = document.createElement('h3');
+          dateHeader.innerHTML = `<strong>${data.date}</strong>`;
+          date.appendChild(dateHeader);
+
+          const contentHeader = document.createElement('h3');
+          contentHeader.innerHTML = `<strong>${data.position_location}</strong>`;
+          content.appendChild(contentHeader);
+          if (data.image) {
+              const sectionImage = document.createElement('img');
+              sectionImage.className = 'section_image';
+              sectionImage.src = data.image;
+              content.appendChild(sectionImage);
+          }
+          const contentParagraph = document.createElement('p');
+          contentParagraph.innerHTML = `${data.description}`;
+          content.appendChild(contentParagraph);
+      });
+
+
+      // new endText
+      function moveText(scrollY) {
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const line = document.querySelector('.line');
+        const endText = document.querySelector('.end-text');
+
+        const lineRect = line.getBoundingClientRect();
+        const lineBottom = lineRect.bottom;
+
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        const endTextOffset = 100; // Adjust this value as needed for the desired positioning of the text
+
+        let sectionOnRight = false;
+        let sectionOnLeft = false;
+
+        // Check if any section is next to the bottom of the line
+        for (let i = 0; i < sections.length; i++) {
+
+            const section = sections[i];
+            const sectionRect = section.getBoundingClientRect();
+            const sectionBottom = sectionRect.bottom;
+            const sectionTop = sectionRect.top;
+            const content = section.querySelector('.content');
+            const contentRect = content.getBoundingClientRect();
+            const sectionLeft = contentRect.left;
+            const sectionRight = contentRect.right;
+
+            if ((lineBottom >= sectionTop) && (lineBottom <= sectionBottom)) {
+                if (i == (sections.length - 1)) {
+                    endText.style.opacity = '0';
+                }
+                if (sectionLeft < windowWidth/2){
+                    sectionOnLeft = true;
+                } else if (sectionRight > windowWidth/2){
+                    sectionOnRight = true;
+                }
+                break;
+            }
+        }
+
+        if (sectionOnRight) {
+            endText.style.transform = 'translateX(-50%)';
+        } else if (sectionOnLeft) {
+            endText.style.transform = 'translateX(50%)';
+        } else {
+            endText.style.transform = 'translateX(0)';
+        }
+
+    }
+
+
+
+
+      "use strict";
+
+      function qs(selector, all = false) {
+      return all ? document.querySelectorAll(selector) : document.querySelector(selector);
+      }
+
+      const sections = qs('.section', true); 
+      const line = qs('.line');
+      const endText = qs('.end-text'); //new endText
+      line.style.bottom = `calc(100% - 20px)`;
+      endText.style.bottom = `calc(100% - 20px)`; //new endText
+      let prevScrollY = window.scrollY;
+      let up, down;
+      let full = false;
+      let set = 0;
+      const targetY = window.innerHeight * .8;
+
+      function scrollHandler(e) {
+        const scrollY = window.scrollY;
+        up = scrollY < prevScrollY;
+        down = !up;
+        const timelineRect = timeline.getBoundingClientRect();
+        const lineRect = line.getBoundingClientRect(); // const lineHeight = lineRect.bottom - lineRect.top;
+
+        const dist = targetY - timelineRect.top;
+
+        if (down && !full) {
+            set = Math.max(set, dist);
+            line.style.bottom = `calc(100% - ${set}px)`;
+            endText.style.bottom = `calc(100% - ${set}px - 40px)`; //new endText
+        }
+
+        if (dist > timeline.offsetHeight + 50 && !full) {
+            full = true;
+            line.style.bottom = `-50px`;
+        }
+
+        sections.forEach(item => {
+            // console.log(item);
+            const rect = item.getBoundingClientRect(); //     console.log(rect);
+
+            if (rect.top + item.offsetHeight / 5 < targetY) {
+                item.classList.add('show-me');
+            }
+        }); // console.log(up, down);
+
+        moveText(scrollY); //new endText
+
+        prevScrollY = window.scrollY;
+      }
+
+      line.style.display = 'block';
+      window.addEventListener('scroll', scrollHandler);
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        moveText(window.scrollY)
+        scrollHandler();
+    });
+  </script>
+
+
+
+
+</body>
+
+</html>
+
+
