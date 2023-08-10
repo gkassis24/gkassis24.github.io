@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>George Kassis</title>
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div id="header">
+    <div class="header-container">
+      <div id="header_name_logo" class="name">George Kassis</div>
+      <div class="nav-links">
+        <a id="header_home_link" href="index.html">Home</a>
+        <a id="header_experiences_link" href="#" class="dropdown-link">Experiences</a>
+        <div class="dropdown">
+          <div class="dropdown-content">
+            <a href="medical_experience.html">Medicine</a>
+            <a href="research_experience.html">Research</a>
+            <a href="data_science_experience.html">Data Science and ML</a>
+            <a href="tutoring_experience.html">Tutoring</a>
+          </div>
+        </div>
+        <a id="header_contact_me_link" href="contact_me.html">Contact Me</a>
+        <a id="header_download_resume_link" href="resume_pdf/Resume.pdf" style="white-space: pre;" download>Download Resume <img id="download_icon_pic" src="static/images/download_icon.jpg" alt="Download Icon"> </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class= "experience_page_container">
+      <div id="experience_page_header">
+          <h1 id="experience_page_header_h1">Tutoring Experience</h1>
+          <p id="experience_page_header_p">Facilitating the growth of learners across a spectrum of experience levels has been both fulfilling and harmonious with my passion for education. As a devoted tutor, I've had the honor of equipping individuals of diverse backgrounds, including students, professionals, and enthusiasts, with the essential tools and proficiencies to excel in several domains including biology, math, computer programming, and data analytics. Through meticulously structured guidance and tailored mentorship, I've empowered learners to navigate the intricate dimensions of these subjects, fostering confidence and igniting a genuine zeal for exploration.</p>
+      </div>
+      <div class="timeline">
+          <div class="line"></div>
+          <div class="end-text">KEEP SCROLLING DOWN TO
+SEE MORE EXPERIENCES</div>
+      </div>
+  </div>
+
+  <footer class="disclaimer">
+    <p>
+      Disclaimer: The content provided on this portfolio website is for informational and illustrative purposes only. Any references to educational institutions, organizations, or past work experiences are based on the author's personal experiences and recollections. The author does not intend to make any official or legal claims on behalf of these institutions or organizations. All information provided is accurate to the best of the author's knowledge and belief, but it is recommended that readers verify details independently for accuracy and completeness. The author is not responsible for any errors, omissions, or outdated information presented on this website. Any views, opinions, or representations expressed in this portfolio are solely those of the author and do not reflect the views of any mentioned institutions or organizations.
+    </p>
+  </footer>
+    
+  <script>
+
+      const timeline = document.querySelector('.timeline');
+
+      // Array of research experience data
+      const researchData = [
+          {
+              date: 'May 2022 – Present',
+              image: '',
+              position_location: 'Independent Tutoring',
+              description: 'My commitment to nurturing knowledge extends to an independent tutoring journey where I collaborate with learners as well as professionals seeking proficiency in subjects including mathematics, programming, data analysis, and more. Through tailored learning experiences, I facilitate comprehensive understanding by unraveling intricate concepts and guiding practical applications. Emphasizing interactive discussions, exercises, and real-world scenarios, I empower learners to confidently navigate complex topics. This collaborative approach fosters an environment where knowledge is cultivated, shared, and refined.',
+          },
+          {
+              date: 'January 2021 – May 2021',
+              image: '',
+              position_location: 'Teaching Assistant in the Biomedical Engineering Department at the University of Rochester – Rochester, NY',
+              description: 'In the biomedical engineering department, I served as a teaching assistant for a microcontrollers course. My responsibilities encompassed the meticulous debugging and evaluation of students\' coding scripts and Arduino Uno projects. Beyond classroom engagement, I led focused C/C++ coding tutorials, providing clear explanations and hands-on experience to enhance students\' programming capabilities and equip them with the skills to excel in computational problem-solving. Complementing these efforts, I held regular office hours to address students\' questions and encourage a conducive learning environment.',
+          },
+          {
+              date: 'August 2020 – December 2020',
+              image: '',
+              position_location: 'Teaching Assistant in the Neuroscience Department at the University of Rochester – Rochester, NY',
+              description: 'Within the Neuroscience Department, I facilitated meaningful discussions during neuroscience recitations, guiding students in tackling challenging questions and fostering a deeper understanding of the material.  Additionally, I assisted the professors to ensure seamless lab sessions. This encompassed preparing sheep brains and guiding students through the use of statistical software for neurobiology experiments. Beyond the classroom, I held targeted review sessions ahead of exams and remained readily available to promptly address students\' inquiries via email, fostering an environment of continuous learning and support.',
+          },
+          {
+              date: 'August 2019 – May 2020',
+              image: '',
+              position_location: 'Head Teaching Assistant in the Biology Department at the University of Rochester – Rochester, NY',
+              description: 'As a teaching assistant, I assumed a multi-faceted role that encompassed grading exams, spearheading interactive weekly workshops that offered students valuable strategies for success, and integrating game-like activities to amplify students’ engagement and comprehension. My commitment to nurturing students\' progress led to a notable advancement: I was entrusted with the role of Head Teaching Assistant within the Biology Department. In this role, I arranged review sessions and supported the workshops of fellow mentors, fostering a cohesive and effective learning environment. These experiences have honed my versatility and patience in conveying complex concepts, equipping me with a keen ability to adopt diverse perspectives when dissecting scientific problems. Through these roles, I\'ve gained valuable insights into effective pedagogical approaches and the art of fostering holistic understanding among learners.',
+          },
+          {
+              date: 'September 2018 – March 2020',
+              image: '',
+              position_location: 'Community Volunteer with Stem Initiatives Club at the University of Rochester – Rochester, NY',
+              description: 'In this community-focused role, I conducted fun hands-on experiments and offered comprehensive guidance to middle and high school students. At the heart of this initiative was a dedicated effort to bolster the aspirations of local Rochester students exploring the vast horizons of STEM studies and careers. Concurrently, I collaborated with a University of Rochester alumnus to mentor high school students as they prepared for national science competitions. In particular, I facilitated the building of robots that were optimized for specific functions, fostering an environment of innovative problem-solving. Additionally, I took part in clarifying complex competition questions spanning diverse domains. Through this collaborative journey, I empowered young enthusiasts to embrace the enchanting intersection of science and technology, igniting a passion that propels them toward future excellence.',
+          }
+          // Add more data entries as needed
+      ];
+
+      researchData.forEach((data, index) => {
+          const section = document.createElement('div');
+          section.className = 'section';
+          timeline.appendChild(section);
+
+          const bead = document.createElement('div');
+          bead.className = 'bead';
+          section.appendChild(bead);
+
+          const content = document.createElement('div');
+          content.className = 'content';
+          section.appendChild(content);
+
+          const date = document.createElement('div');
+          date.className = 'date';
+          section.appendChild(date);
+          const dateHeader = document.createElement('h3');
+          dateHeader.innerHTML = `<strong>${data.date}</strong>`;
+          date.appendChild(dateHeader);
+
+          const contentHeader = document.createElement('h3');
+          contentHeader.innerHTML = `<strong>${data.position_location}</strong>`;
+          content.appendChild(contentHeader);
+          if (data.image) {
+              const sectionImage = document.createElement('img');
+              sectionImage.className = 'section_image';
+              sectionImage.src = data.image;
+              content.appendChild(sectionImage);
+          }
+          const contentParagraph = document.createElement('p');
+          contentParagraph.innerHTML = `${data.description}`;
+          content.appendChild(contentParagraph);
+      });
+
+
+      // new endText
+      function moveText(scrollY) {
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const line = document.querySelector('.line');
+        const endText = document.querySelector('.end-text');
+
+        const lineRect = line.getBoundingClientRect();
+        const lineBottom = lineRect.bottom;
+
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        const endTextOffset = 100; // Adjust this value as needed for the desired positioning of the text
+
+        let sectionOnRight = false;
+        let sectionOnLeft = false;
+
+        // Check if any section is next to the bottom of the line
+        for (let i = 0; i < sections.length; i++) {
+
+            const section = sections[i];
+            const sectionRect = section.getBoundingClientRect();
+            const sectionBottom = sectionRect.bottom;
+            const sectionTop = sectionRect.top;
+            const content = section.querySelector('.content');
+            const contentRect = content.getBoundingClientRect();
+            const sectionLeft = contentRect.left;
+            const sectionRight = contentRect.right;
+
+            if ((lineBottom >= sectionTop) && (lineBottom <= sectionBottom)) {
+                if (i == (sections.length - 1)) {
+                    endText.style.opacity = '0';
+                }
+                if (sectionLeft < windowWidth/2){
+                    sectionOnLeft = true;
+                } else if (sectionRight > windowWidth/2){
+                    sectionOnRight = true;
+                }
+                break;
+            }
+        }
+
+        if (sectionOnRight) {
+            endText.style.transform = 'translateX(-50%)';
+        } else if (sectionOnLeft) {
+            endText.style.transform = 'translateX(50%)';
+        } else {
+            endText.style.transform = 'translateX(0)';
+        }
+
+    }
+
+
+
+
+      "use strict";
+
+      function qs(selector, all = false) {
+      return all ? document.querySelectorAll(selector) : document.querySelector(selector);
+      }
+
+      const sections = qs('.section', true); 
+      const line = qs('.line');
+      const endText = qs('.end-text'); //new endText
+      line.style.bottom = `calc(100% - 20px)`;
+      endText.style.bottom = `calc(100% - 20px)`; //new endText
+      let prevScrollY = window.scrollY;
+      let up, down;
+      let full = false;
+      let set = 0;
+      const targetY = window.innerHeight * .8;
+
+      function scrollHandler(e) {
+        const scrollY = window.scrollY;
+        up = scrollY < prevScrollY;
+        down = !up;
+        const timelineRect = timeline.getBoundingClientRect();
+        const lineRect = line.getBoundingClientRect(); // const lineHeight = lineRect.bottom - lineRect.top;
+
+        const dist = targetY - timelineRect.top;
+
+        if (down && !full) {
+            set = Math.max(set, dist);
+            line.style.bottom = `calc(100% - ${set}px)`;
+            endText.style.bottom = `calc(100% - ${set}px - 40px)`; //new endText
+        }
+
+        if (dist > timeline.offsetHeight + 50 && !full) {
+            full = true;
+            line.style.bottom = `-50px`;
+        }
+
+        sections.forEach(item => {
+            // console.log(item);
+            const rect = item.getBoundingClientRect(); //     console.log(rect);
+
+            if (rect.top + item.offsetHeight / 5 < targetY) {
+                item.classList.add('show-me');
+            }
+        }); // console.log(up, down);
+
+        moveText(scrollY); //new endText
+
+        prevScrollY = window.scrollY;
+      }
+
+      line.style.display = 'block';
+      window.addEventListener('scroll', scrollHandler);
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        moveText(window.scrollY)
+        scrollHandler();
+    });
+  </script>
+
+
+
+
+</body>
+
+</html>
+
+
+
