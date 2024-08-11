@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Checker Web App</title>
+    <style>
+        /* styles.css */
+
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #005f99;
+            margin-bottom: 20px;
+        }
+
+        /* Upload Container */
+        #upload-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #upload-container input[type="file"] {
+            display: none;
+        }
+
+        #upload-container label {
+            background-color: #e0f7fa;
+            color: #00796b;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #upload-container label:hover {
+            background-color: #b2ebf2;
+        }
+
+        /* Location Select */
+        #location-select {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #location-select select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #b0bec5;
+            background-color: #f5f5f5;
+            color: #00796b;
+        }
+
+        /* Output Container */
+        #output-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #00796b;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #004d40;
+        }
+
+        /* Category Filters */
+        #category-filters {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #category-filters input[type="checkbox"] {
+            display: none;
+        }
+
+        #category-filters label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 40px;
+            padding: 5px; /* Adjust padding if necessary */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            font-size: 12px;
+            box-sizing: border-box; /* Ensure padding and border are included in width and height */
+            overflow: hidden; /* Hide any overflowed content */
+        }
+
+        #show-lateShifts + label {
+            background-color: #ffe0b2; /* Light orange background */
+            color: #333;
+            border: 2px solid #ffb74d; /* Border color matching orange theme */
+        }
+
+        #show-lateShifts:checked + label {
+            background-color: #ffcc80; /* Calm orange for checked state */
+        }
+
+        #show-uncoveredShifts + label {
+            background-color: #ffcdd2;
+            color: #333;
+            border: 2px solid #e57373;
+        }
+
+        #show-uncoveredShifts:checked + label {
+            background-color: #ef9a9a;
+        }
+
+        #show-missedClockingIn + label,
+        #show-missedClockingOut + label {
+            background-color: #c5cae9;
+            color: #333;
+            border: 2px solid #3f51b5;
+        }
+
+        #show-missedClockingIn:checked + label,
+        #show-missedClockingOut:checked + label {
+            background-color: #9fa8da;
+        }
+
+        #show-correctlyCoveredShifts + label {
+            background-color: #c8e6c9;
+            color: #333;
+            border: 2px solid #43a047;
+        }
+
+        #show-correctlyCoveredShifts:checked + label {
+            background-color: #a5d6a7;
+        }
+
+        /* Shift Canvas */
+        #shift-canvas {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #b0bec5;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+
+        /* Styles for the employee section */
+        #employee-toggles {
+            border: 2px solid #00796b; /* Border color */
+            border-radius: 8px; /* Rounded corners */
+            padding: 10px;
+            margin-bottom: 20px; /* Space underneath the box */
+            position: relative; /* For positioning the label inside the border */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Space between buttons */
+        }
+
+        /* Label inside the border */
+        #employee-toggles::before {
+            content: "Employees";
+            position: absolute;
+            top: -12px;
+            left: 10px;
+            background: #ffffff; /* Background color of the label */
+            padding: 0 5px;
+            font-weight: bold;
+            color: #00796b; /* Label color */
+        }
+
+        /* Styles for the employee buttons */
+        #employee-toggles .employee-button {
+            background-color: #f1f1f1; /* Default background color */
+            border: 2px solid #00796b; /* Border color */
+            border-radius: 4px;
+            padding: 10px;
+            text-align: left; /* Align text to the left */
+            font-size: 14px; /* Font size */
+            color: #333; /* Text color */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            width: calc(50% - 10px); /* Two columns layout with space between buttons */
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        /* Hover and active states for the buttons */
+        #employee-toggles .employee-button:hover,
+        #employee-toggles .employee-button.active {
+            background-color: #00796b; /* Background color when active or hovered */
+            color: #b2ebf2; /* Text color when active or hovered */
+        }
+    </style>>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Shift Checker Web App</h1>
+        <div id="upload-container">
+            <input type="file" id="schedule-upload" accept=".xlsx">
+            <label for="schedule-upload">Upload Schedule Excel</label>
+            <input type="file" id="timesheet-upload" accept=".xlsx">
+            <label for="timesheet-upload">Upload Timesheet Excel</label>
+            <input type="file" id="config-upload" accept=".xlsx">
+            <label for="config-upload">Upload Configuration File</label>
+        </div>
+        
+        <div id="location-select">
+            <label for="location">Select Location:</label>
+            <select id="location">
+                <!-- Options will be dynamically populated -->
+            </select>
+        </div>
+
+        <div id="output-container">
+            <button id="generate-report">Generate Report</button>
+            <button id="refresh-plot">Refresh Plot</button>
+            <button id="show-hours">Show Employee Hours</button>
+            <button id="show-coverage">Show Coverage Summary</button>
+        </div>
+
+        <div id="category-filters">
+            <input type="checkbox" id="show-lateShifts" checked>
+            <label for="show-lateShifts">Hide Late Shifts</label>
+            <input type="checkbox" id="show-uncoveredShifts" checked>
+            <label for="show-uncoveredShifts">Hide Uncovered or Future Shifts</label>
+            <input type="checkbox" id="show-missedClockingIn" checked>
+            <label for="show-missedClockingIn">Hide Missed Clock-In</label>
+            <input type="checkbox" id="show-missedClockingOut" checked>
+            <label for="show-missedClockingOut">Hide Missed Clock-Out</label>
+            <input type="checkbox" id="show-correctlyCoveredShifts" checked>
+            <label for="show-correctlyCoveredShifts">Hide Correctly Covered Shifts</label>
+        </div>
+
+        <div id="employee-toggles"></div>
+
+        <!-- FullCalendar element -->
+        <div id="calendar"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const scheduleUpload = document.getElementById('schedule-upload');
+                const timesheetUpload = document.getElementById('timesheet-upload');
+                const configUpload = document.getElementById('config-upload');
+                const locationSelect = document.getElementById('location');
+                const generateReportBtn = document.getElementById('generate-report');
+                const refreshPlotBtn = document.getElementById('refresh-plot');
+                const categoryFilters = document.getElementById('category-filters');
+                const employeeToggles = document.getElementById('employee-toggles');
+                const showCoverageBtn = document.getElementById('show-coverage');
+                let scheduleData, timesheetData, configData;
+                let configUploaded = false; // Track if the config file has been uploaded
+                var calendarEl = document.getElementById('calendar');
+
+                const category_Filters = document.querySelectorAll('#category-filters input[type="checkbox"]');
+                category_Filters.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        // Find the associated label
+                        const label = document.querySelector(`label[for="${this.id}"]`);
+                        if (label) {
+                            // Toggle the text between "Show" and "Hide"
+                            if (this.checked) {
+                                label.textContent = label.textContent.replace('Show', 'Hide');
+                            } else {
+                                label.textContent = label.textContent.replace('Hide', 'Show');
+                            }
+                        }
+                        // Refresh the plot when a filter changes
+                        if (scheduleData && timesheetData) {
+                            refreshPlot();
+                        }
+                    });
+                });
+
+                scheduleUpload.addEventListener('change', handleScheduleUpload);
+                timesheetUpload.addEventListener('change', handleTimesheetUpload);
+                configUpload.addEventListener('change', handleConfigUpload);
+                generateReportBtn.addEventListener('click', generateReport);
+                refreshPlotBtn.addEventListener('click', refreshPlot);
+                showCoverageBtn.addEventListener('click',showCoverageSummary)
+                locationSelect.addEventListener('change', handleSelectChange);
+
+                async function handleScheduleUpload(event) {
+                    if (!configUploaded) {
+                        alert('Please upload the configuration file first.');
+                        return;
+                    }
+                    const file = event.target.files[0];
+                    if (file) {
+                        scheduleData = await readScheduleFile(file, configData);
+                        alert('Schedule file uploaded successfully.');
+                    }
+                }
+
+                async function handleTimesheetUpload(event) {
+                    if (!configUploaded) {
+                        alert('Please upload the configuration file first.');
+                        return;
+                    }
+                    const file = event.target.files[0];
+                    if (file) {
+                        timesheetData = await readTimesheetFile(file, configData);
+                        alert('Timesheet file uploaded successfully.');
+                    }
+                }
+
+                async function handleConfigUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        configData = await readConfigFile(file);
+                        configUploaded = true; // Mark config file as uploaded
+                        alert('Config file uploaded successfully.');
+                        populateLocationSelect(configData.hospitalConfigs);
+                    }
+                }
+
+                function populateLocationSelect(hospitalConfigs) {
+                    locationSelect.innerHTML = ""; // Clear existing options
+                    hospitalConfigs.forEach(config => {
+                        const option = document.createElement('option');
+                        option.value = config.hospitalName;
+                        option.textContent = config.hospitalName;
+                        locationSelect.appendChild(option);
+                    });
+                }
+
+                // Function to read and extract data from a schedule file
+                async function readScheduleFile(file, configData) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+
+                        reader.onload = (event) => {
+                            try {
+                                const data = new Uint8Array(event.target.result);
+                                const workbook = XLSX.read(data, { type: 'array' });
+
+                                // Create a dictionary to store sheets by hospital name
+                                const scheduleSheetsByHospital = {};
+
+                                // Iterate over each hospital configuration
+                                configData.hospitalConfigs.forEach(hospitalConfig => {
+                                    const { hospitalName, scheduleSheets, hourlySheets } = hospitalConfig;
+
+                                    // Initialize an entry for the hospital
+                                    scheduleSheetsByHospital[hospitalName] = {};
+
+                                    // Extract schedule sheet data if it exists in the workbook
+                                    if (workbook.SheetNames.includes(scheduleSheets)) {
+                                        const scheduleSheet = workbook.Sheets[scheduleSheets];
+                                        scheduleSheetsByHospital[hospitalName].scheduleSheet =
+                                            XLSX.utils.sheet_to_json(scheduleSheet, { header: 1 });
+                                    }
+
+                                    // Extract hourly sheet data if it exists in the workbook
+                                    if (workbook.SheetNames.includes(hourlySheets)) {
+                                        const hourlySheet = workbook.Sheets[hourlySheets];
+                                        scheduleSheetsByHospital[hospitalName].hourlySheet =
+                                            XLSX.utils.sheet_to_json(hourlySheet, { header: 1 });
+                                    }
+                                });
+
+                                console.log(scheduleSheetsByHospital)
+                                resolve(scheduleSheetsByHospital);
+
+                            } catch (error) {
+                                reject(error);
+                            }
+                        };
+
+                        reader.onerror = (error) => reject(error);
+                        reader.readAsArrayBuffer(file);
+                    });
+                }
+
+                // Function to read and extract data from a timesheet file
+                async function readTimesheetFile(file, configData) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+
+                        reader.onload = (event) => {
+                            try {
+                                const data = new Uint8Array(event.target.result);
+                                const workbook = XLSX.read(data, { type: 'array' });
+
+                                // Create a dictionary to store sheets by hospital name
+                                const timesheetSheetsByHospital = {};
+
+                                // Function to get formatted values
+                                const getFormattedSheetData = (sheet) => {
+                                    const sheetData = [];
+                                    const range = XLSX.utils.decode_range(sheet['!ref']);
+
+                                    for (let row = range.s.r; row <= range.e.r; row++) {
+                                        const rowData = [];
+                                        for (let col = range.s.c; col <= range.e.c; col++) {
+                                            const cellAddress = { c: col, r: row };
+                                            const cellRef = XLSX.utils.encode_cell(cellAddress);
+                                            const cell = sheet[cellRef];
+                                            rowData.push(cell ? cell.w : ''); // Get formatted value or empty string
+                                        }
+                                        sheetData.push(rowData);
+                                    }
+
+                                    return sheetData;
+                                };
+
+                                // Iterate over each hospital configuration
+                                configData.hospitalConfigs.forEach(hospitalConfig => {
+                                    const { hospitalName, timesheetSheets, summarySheets } = hospitalConfig;
+
+                                    // Initialize an entry for the hospital
+                                    timesheetSheetsByHospital[hospitalName] = {};
+
+                                    // Extract timesheet sheet data if it exists in the workbook
+                                    if (workbook.SheetNames.includes(timesheetSheets)) {
+                                        const timesheetSheet = workbook.Sheets[timesheetSheets];
+                                        timesheetSheetsByHospital[hospitalName].timesheetSheet = getFormattedSheetData(timesheetSheet);
+                                    }
+
+                                    // Extract summary sheet data if it exists in the workbook
+                                    if (workbook.SheetNames.includes(summarySheets)) {
+                                        const summarySheet = workbook.Sheets[summarySheets];
+                                        timesheetSheetsByHospital[hospitalName].summarySheet = getFormattedSheetData(summarySheet);
+                                    }
+                                });
+
+                                console.log(timesheetSheetsByHospital);
+                                resolve(timesheetSheetsByHospital);
+
+                            } catch (error) {
+                                reject(error);
+                            }
+                        };
+
+                        reader.onerror = (error) => reject(error);
+                        reader.readAsArrayBuffer(file);
+                    });
+                }
+
+
+                async function readConfigFile(file) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+
+                        reader.onload = (event) => {
+                            try {
+                                const data = new Uint8Array(event.target.result);
+                                const workbook = XLSX.read(data, { type: 'array' });
+                                const sheetName = workbook.SheetNames[0];
+                                const worksheet = workbook.Sheets[sheetName];
+                                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                                // Extract headers
+                                const headers = jsonData[0];
+                                const columnIndices = {
+                                    scheduleSheets: headers.indexOf("Schedule Sheets Names"),
+                                    hourlySheets: headers.indexOf("Schedule Hourly Sheet Names"),
+                                    timesheetSheets: headers.indexOf("Timesheet Sheet Names"),
+                                    summarySheets: headers.indexOf("TimeSheet Summary Sheet Names"),
+                                    hospitalName: headers.indexOf("Hospital Name"),
+                                    employees: headers.indexOf("Employee"),
+                                    workingStatus: headers.indexOf("Working Status")
+                                };
+
+                                // Check for required columns
+                                for (const key in columnIndices) {
+                                    if (columnIndices[key] === -1) {
+                                        throw new Error(`Required column "${key.replace(/([A-Z])/g, ' $1')}" not found in config file.`);
+                                    }
+                                }
+
+                                const hospitalConfigs = [];
+                                const employeeStatuses = {};
+
+                                // Extract hospital configuration and employee status data
+                                for (let i = 1; i < jsonData.length; i++) { // Start at 1 to skip header row
+                                    const row = jsonData[i];
+                                    
+                                    // If a row contains a hospital name, extract it along with its associated sheets
+                                    const hospitalName = row[columnIndices.hospitalName];
+                                    if (hospitalName) {
+                                        hospitalConfigs.push({
+                                            hospitalName,
+                                            scheduleSheets: row[columnIndices.scheduleSheets],
+                                            hourlySheets: row[columnIndices.hourlySheets],
+                                            timesheetSheets: row[columnIndices.timesheetSheets],
+                                            summarySheets: row[columnIndices.summarySheets],
+                                        });
+                                    }
+
+                                    // If a row contains an employee name, extract it and its status
+                                    const employeeName = row[columnIndices.employees];
+                                    const status = row[columnIndices.workingStatus];
+                                    if (employeeName) {
+                                        employeeStatuses[employeeName] = status;
+                                    }
+                                }
+
+                                console.log({
+                                    hospitalConfigs,
+                                    employeeStatuses
+                                })
+                                resolve({
+                                    hospitalConfigs,
+                                    employeeStatuses
+                                });
+
+                            } catch (error) {
+                                reject(error);
+                            }
+                        };
+
+                        reader.onerror = (error) => reject(error);
+                        reader.readAsArrayBuffer(file);
+                    });
+                }
+
+                let shifts_results;
+                let hours_results;
+                let report_generated = 'no';
+                function generateReport() {
+                    if (!scheduleData || !timesheetData) {
+                        alert('Please upload both schedule and timesheet files.');
+                        return;
+                    }
+
+                    report_generated = 'yes';
+
+                    // Get the selected location
+                    const location = locationSelect.value;
+
+                    console.log('Generating report for location:', location);
+
+                    // Extract data for the selected location
+                    const scheduleForLocation = scheduleData[location]?.scheduleSheet || [];
+                    const timesheetForLocation = timesheetData[location]?.timesheetSheet || [];
+                    const summaryForLocation = timesheetData[location]?.summarySheet || [];
+
+                    // Ensure required data exists
+                    if (!scheduleForLocation.length || !timesheetForLocation.length || !summaryForLocation.length) {
+                        alert('Incomplete data for the selected location.');
+                        return;
+                    }
+
+                    // Process the employee data to create toggle buttons
+                    fillEmployeeToggleButtons(summaryForLocation);
+
+                    // Call preprocessing functions
+                    shifts_results = pre_process_shifts(scheduleForLocation, timesheetForLocation);
+                    //hours_results = pre_process_hours(scheduleData, summaryForLocation);
+
+                    refreshPlot();
+
+                }
+
+                function fillEmployeeToggleButtons(summarySheet) {
+                    const employeeTogglesContainer = document.getElementById('employee-toggles');
+                    employeeTogglesContainer.innerHTML = ''; // Clear existing buttons
+
+                    const headers = summarySheet[0];
+                    const firstNameIndex = headers.indexOf('First Name');
+                    const lastNameIndex = headers.indexOf('Last Name');
+
+                    if (firstNameIndex === -1 || lastNameIndex === -1) {
+                        alert('Summary sheet missing "First Name" or "Last Name" columns.');
+                        return;
+                    }
+
+                    const uniqueNames = new Set();
+
+                    for (let i = 1; i < summarySheet.length; i++) {
+                        const row = summarySheet[i];
+                        const firstName = row[firstNameIndex];
+                        const lastName = row[lastNameIndex];
+                        const fullName = `${firstName} ${lastName}`;
+
+                        if (!uniqueNames.has(fullName)) {
+                            uniqueNames.add(fullName);
+
+                            // Create the toggle button
+                            const toggleButton = document.createElement('input');
+                            toggleButton.type = 'checkbox';
+                            toggleButton.id = `toggle-${fullName.replace(/\s+/g, '-').toLowerCase()}`;
+                            toggleButton.checked = true;
+
+                            // Create the label for the toggle button
+                            const label = document.createElement('label');
+                            label.htmlFor = toggleButton.id;
+                            label.textContent = fullName;
+
+                            // Append the toggle button and label to the container
+                            const employeeItem = document.createElement('div');
+                            employeeItem.className = 'employee-item';
+                            employeeItem.appendChild(toggleButton);
+                            employeeItem.appendChild(label);
+                            employeeTogglesContainer.appendChild(employeeItem);
+                        }
+                    }
+                }
+
+
+                function pre_process_shifts(scheduleForLocation, timesheetForLocation) {
+                    // Placeholder for preprocessing shifts logic
+                    console.log('Pre-processing shifts for schedule and timesheet sheets...');
+                    // Add your shift preprocessing code here
+                    const scheduleDataForLocation = processScheduleData(scheduleForLocation);
+                    const timesheetDataForLocation = processTimesheetData(timesheetForLocation);
+                    const results = checkShifts(scheduleDataForLocation, timesheetDataForLocation);
+                    return results;
+                }
+
+
+                function processScheduleData(scheduleSheet) {
+                    // Extract column names from the first row
+                    const headers = scheduleSheet[0];
+                    
+                    // Convert the rest of the rows into objects based on the column names
+                    return scheduleSheet.slice(1).map(row => {
+                        // Create a dictionary for the current row
+                        const rowObject = headers.reduce((acc, header, index) => {
+                            acc[header] = row[index];
+                            return acc;
+                        }, {});
+
+                        
+
+                        // Process date and time fields                        
+                        const shiftStartDate = rowObject['Shift Start Date'] ? rowObject['Shift Start Date'] : '';
+                        const shiftStartTime = rowObject['Shift Start Time'] ? parseTime(rowObject['Shift Start Time']) : '';
+                        const shiftEndTime = rowObject['Shift End Time'] ? parseTime(rowObject['Shift End Time']) : '';
+                        let shiftEndDate = rowObject['Shift Start Date'];
+                        
+                        
+                        // Adjust Shift End Date where the end time is earlier than the start time
+                        if (rowObject['Shift Start Time'] && rowObject['Shift End Time']) {
+                            const now = new Date();
+                            let start_fake_time = new Date(setTimeToDate(now,shiftStartTime));
+                            let end_fake_time = new Date(setTimeToDate(now,shiftEndTime));
+                            if (end_fake_time < start_fake_time) {
+                                let date_holder = new Date(shiftEndDate);
+                                date_holder.setDate(date_holder.getDate() + 1);
+                                let date_holder_string = date_holder.toISOString().split('T')[0];
+                                shiftEndDate = date_holder_string;
+                            }
+                        }
+                        
+
+                        let shiftStart = shiftStartDate && shiftStartTime ? new Date(`${shiftStartDate}T${shiftStartTime}`) : new Date(NaN);
+                        let shiftEnd = shiftEndDate && shiftEndTime ? new Date(`${shiftEndDate}T${shiftEndTime}`) : new Date(NaN);
+
+
+                        return {
+                            'First Name': rowObject['First Name'] || '',
+                            'Last Name': rowObject['Last Name'] || '',
+                            'Employee ID': rowObject['Employee ID'] || '',
+                            'Shift Start': isNaN(shiftStart.getTime()) ? '' : shiftStart,
+                            'Shift End': isNaN(shiftEnd.getTime()) ? '' : shiftEnd
+                        };
+                    });
+                }
+
+
+                function processTimesheetData(timesheetSheet) {
+                    const headers = timesheetSheet[0];
+
+                    return timesheetSheet.slice(1).map(row => {
+                        // Create a dictionary for the current row
+                        const rowObject = headers.reduce((acc, header, index) => {
+                            acc[header] = row[index];
+                            return acc;
+                        }, {});
+
+                        // Parse and process date and time fields
+                        const actualStartDate = rowObject['Date'] ? convertDateString(new Date(rowObject['Date'])) : '';
+                        const actualStartTime = rowObject['Start Time'] ? parseTime(rowObject['Start Time']) : '';
+                        const actualEndTime = rowObject['End Time'] ? parseTime(rowObject['End Time']) : '';
+                        let actualEndDate = convertDateString(new Date(rowObject['Date']));
+
+                        // Adjust Shift End Date where the end time is earlier than the start time
+                        if (rowObject['Shift Start Time'] && rowObject['Shift End Time']) {
+                            const now = new Date();
+                            let start_fake_time = new Date(setTimeToDate(now,actualStartTime));
+                            let end_fake_time = new Date(setTimeToDate(now,actualEndTime));
+                            if (end_fake_time < start_fake_time) {
+                                let date_holder = new Date(actualEndDate);
+                                date_holder.setDate(date_holder.getDate() + 1);
+                                let date_holder_string = date_holder.toISOString().split('T')[0];
+                                actualEndDate = date_holder_string;
+                            }
+                        }
+
+                        let actualStart = actualStartDate && actualStartTime ? new Date(`${actualStartDate}T${actualStartTime}`) : new Date(NaN);
+                        let actualEnd = actualEndDate && actualEndTime ? new Date(`${actualEndDate}T${actualEndTime}`) : new Date(NaN);
+
+
+                        return {
+                            'First Name': rowObject['First Name'] || '',
+                            'Last Name': rowObject['Last Name'] || '',
+                            'Employee ID': rowObject['Employee ID'] || '',
+                            'Actual Start': isNaN(actualStart.getTime()) ? '' : actualStart,
+                            'Actual End': isNaN(actualEnd.getTime()) ? '' : actualEnd,
+                            'Missing Clock-In': !rowObject['Start Time'], // True if Start Time is missing or empty
+                            'Missing Clock-Out': !rowObject['End Time'] // True if End Time is missing or empty
+                        };
+                    });
+                }
+
+
+                function parseTime(timeString) {
+                    if (!timeString) {
+                        return '';
+                    }
+
+                    // Convert time string to a Date object with today's date
+                    const now = new Date();
+                    const [time, period] = timeString.split(' ');
+
+                    // Extract hours and minutes from the time string
+                    const [hours, minutes] = time.split(':').map(Number);
+
+                    // Adjust hours based on AM/PM
+                    let adjustedHours = hours;
+                    if (period.toLowerCase() === 'pm' && hours !== 12) {
+                        adjustedHours += 12; // Convert PM hour to 24-hour format
+                    } else if (period.toLowerCase() === 'am' && hours === 12) {
+                        adjustedHours = 0; // Convert 12 AM to 0 hours
+                    }
+
+                    // Create a new Date object with today's date and the adjusted time
+                    let parsedTime = new Date(now.setHours(adjustedHours, minutes, 0, 0));
+                    const tzoffset = parsedTime.getTimezoneOffset() * 60000;
+                    parsedTime_UTC_offset = new Date(parsedTime.valueOf() - tzoffset);
+
+                    // Return the time in ISO 8601 format (HH:mm:ss) for consistency
+                    return parsedTime_UTC_offset.toISOString().split('T')[1];
+                }
+
+                
+                function checkShifts(scheduleDataArray, timesheetDataArray) {
+                    // Ensure the inputs are arrays
+                    if (!Array.isArray(scheduleDataArray) || !Array.isArray(timesheetDataArray)) {
+                        throw new Error('Input data must be arrays');
+                    }
+
+                    // Extract column names from the first object of each array
+                    const scheduleHeaders = Object.keys(scheduleDataArray[0] || {});
+                    const timesheetHeaders = Object.keys(timesheetDataArray[0] || {});
+
+                    const gracePeriod = 30 * 60 * 1000; // 30 minutes in milliseconds
+                    const lateShifts = [];
+                    const uncoveredShifts = [];
+                    const missedClockingIn = [];
+                    const missedClockingOut = [];
+                    const correctlyCoveredShifts = [];
+
+                    // Process schedule data
+                    const scheduleData = scheduleDataArray.map(row => {
+                        return scheduleHeaders.reduce((acc, header) => {
+                            acc[header] = row[header];
+                            return acc;
+                        }, {});
+                    });
+
+                    // Process timesheet data
+                    const timesheetData = timesheetDataArray.map(row => {
+                        return timesheetHeaders.reduce((acc, header) => {
+                            acc[header] = row[header];
+                            return acc;
+                        }, {});
+                    });
+
+                    scheduleData.forEach(schedule => {
+                        const { 'First Name': empFirst, 'Last Name': empLast, 'Employee ID': empId, 'Shift Start': scheduledStart, 'Shift End': scheduledEnd } = schedule;
+
+                        // Convert dates to Date objects for comparison
+                        const scheduledStartDate = new Date(scheduledStart);
+                        const scheduledEndDate = new Date(scheduledEnd);
+
+                        // Find matching timesheet entries
+                        const entries = timesheetData.filter(entry => 
+                            entry['Employee ID'] === empId &&
+                            (
+                                // Condition 1: Actual Start time within grace period of Scheduled Start time
+                                (entry['Actual Start'] ? new Date(entry['Actual Start']).getTime() >= scheduledStartDate.getTime() - gracePeriod && new Date(entry['Actual Start']).getTime() <= scheduledStartDate.getTime() + gracePeriod : false) ||
+                                // Condition 2: Actual End time within grace period of Scheduled End time
+                                (entry['Actual End'] ? new Date(entry['Actual End']).getTime() >= scheduledEndDate.getTime() - gracePeriod && new Date(entry['Actual End']).getTime() <= scheduledEndDate.getTime() + gracePeriod : false)
+                            )
+                        );
+
+
+                        if (entries.length === 0) {
+                            mins_difference = new Date().getTime() - new Date().getTime();
+                            uncoveredShifts.push({ empFirst, empLast, empId, scheduledStart, scheduledEnd, mins_difference });
+                        } else {
+                            const entry = entries[0];
+                            const actualStart1 = entry['Actual Start'];
+                            const actualStartDate1 = new Date(actualStart1)
+                            mins_difference = actualStartDate1.getTime() - scheduledStartDate.getTime();
+                            const actualStart = entry['Actual Start'];
+                            const actualEnd = entry['Actual End'];
+
+                            if (!actualStart) {
+                                missedClockingIn.push({ empFirst, empLast, empId, scheduledStart, scheduledEnd, mins_difference });
+                            } else if (!actualEnd) {
+                                missedClockingOut.push({ empFirst, empLast, empId, scheduledStart, scheduledEnd, mins_difference });
+                            } else {
+                                const actualStartDate = new Date(actualStart);
+                                if (actualStartDate.getTime() > scheduledStartDate.getTime() + 60000) { // Late if starts more than 1 minute late
+                                    lateShifts.push({ empFirst, empLast, empId, scheduledStart, scheduledEnd, mins_difference });
+                                } else {
+                                    correctlyCoveredShifts.push({ empFirst, empLast, empId, scheduledStart, scheduledEnd, mins_difference });
+                                }
+                            }
+                        }
+                    });
+
+                    return { lateShifts, uncoveredShifts, missedClockingIn, missedClockingOut, correctlyCoveredShifts };
+                }
+
+                function pre_process_hours(scheduleData, summaryForLocation) {
+                    // Store merged data for all locations
+                    const allMergedData = [];
+
+                    // Create an array of location names to be used for column names
+                    const locationNames = Object.keys(scheduleData);
+                    const locationColumns = locationNames.map(location => `${location}Hours`);
+
+                    // Process data for each location
+                    for (const location of locationNames) {
+                        const hourlyForLocation = scheduleData[location]?.hourlySheet || [];
+
+                        // Map to store processed data for each site within a location
+                        const processedData = new Map();
+
+                        // Ensure the hourly sheet is not empty
+                        if (hourlyForLocation.length === 0) {
+                            console.warn(`Empty hourly sheet for location: ${location}`);
+                            continue;
+                        }
+
+                        const headers = hourlyForLocation[0];
+                        const employeeIDIndex = headers.indexOf('Employee ID');
+                        const firstNameIndex = headers.indexOf('First Name');
+                        const lastNameIndex = headers.indexOf('Last Name');
+                        const hoursIndex = headers.indexOf('Total Hours');
+
+                        if (employeeIDIndex === -1 || firstNameIndex === -1 || lastNameIndex === -1 || hoursIndex === -1) {
+                            console.warn(`Missing required columns in hourly sheet for location: ${location}`);
+                            continue;
+                        }
+
+                        // Process each row in the hourly sheet
+                        hourlyForLocation.slice(1).forEach(row => {
+                            const employeeID = row[employeeIDIndex];
+                            const firstName = row[firstNameIndex];
+                            const lastName = row[lastNameIndex];
+                            const totalHours = parseFloat(row[hoursIndex]);
+
+                            // Aggregate hours for each employee
+                            if (!processedData.has(employeeID)) {
+                                const initialData = { 
+                                    employeeID, 
+                                    firstName, 
+                                    lastName, 
+                                    totalHours: 0 
+                                };
+                                locationColumns.forEach(col => {
+                                    initialData[col] = 0;
+                                });
+                                processedData.set(employeeID, initialData);
+                            }
+
+                            const currentData = processedData.get(employeeID);
+                            currentData.totalHours += totalHours;
+
+                            // Add hours to the specific location column
+                            if (locationColumns.includes(`${location}Hours`)) {
+                                currentData[`${location}Hours`] += totalHours;
+                            }
+                        });
+
+                        // Process summary sheet data
+                        const summaryHeaders = summaryForLocation[0];
+                        const employeeIDIndexSummary = summaryHeaders.indexOf('Employee ID');
+                        const firstNameIndexSummary = summaryHeaders.indexOf('First Name');
+                        const lastNameIndexSummary = summaryHeaders.indexOf('Last Name');
+                        const regularHoursIndex = summaryHeaders.indexOf('Regular');
+                        const otHoursIndex = summaryHeaders.indexOf('OT');
+                        const holidayHoursIndex = summaryHeaders.indexOf('Holiday');
+                        const personalHoursIndex = summaryHeaders.indexOf('Personal');
+                        const sickHoursIndex = summaryHeaders.indexOf('Sick');
+
+                        if (
+                            employeeIDIndexSummary === -1 || firstNameIndexSummary === -1 || lastNameIndexSummary === -1 ||
+                            regularHoursIndex === -1 || otHoursIndex === -1 || holidayHoursIndex === -1 ||
+                            personalHoursIndex === -1 || sickHoursIndex === -1
+                        ) {
+                            console.warn('Summary sheet missing one or more required columns.');
+                            continue;
+                        }
+
+
+                        // Map to aggregate summary data
+                        const aggregatedSummaryData = new Map();
+                        for (let i = 1; i < summaryForLocation.length; i++) {
+                            const summaryRow = summaryForLocation[i];
+                            const summaryEmployeeID = summaryRow[employeeIDIndexSummary];
+                            const summaryFirstName = summaryRow[firstNameIndexSummary];
+                            const summaryLastName = summaryRow[lastNameIndexSummary];
+
+                            if (!aggregatedSummaryData.has(summaryEmployeeID)) {
+                                aggregatedSummaryData.set(summaryEmployeeID, {
+                                    employeeID: summaryEmployeeID,
+                                    firstName: summaryFirstName,
+                                    lastName: summaryLastName,
+                                    regularHours: 0,
+                                    otHours: 0,
+                                    holidayHours: 0,
+                                    personalHours: 0,
+                                    sickHours: 0
+                                });
+                            }
+
+                            const currentSummaryData = aggregatedSummaryData.get(summaryEmployeeID);
+                            currentSummaryData.regularHours += parseFloat(summaryRow[regularHoursIndex]) || 0;
+                            currentSummaryData.otHours += parseFloat(summaryRow[otHoursIndex]) || 0;
+                            currentSummaryData.holidayHours += parseFloat(summaryRow[holidayHoursIndex]) || 0;
+                            currentSummaryData.personalHours += parseFloat(summaryRow[personalHoursIndex]) || 0;
+                            currentSummaryData.sickHours += parseFloat(summaryRow[sickHoursIndex]) || 0;
+                        }
+
+                        // Merge processed hourly data with summary data
+                        const mergedData = [];
+
+                        processedData.forEach(data => {
+                            const summaryData = aggregatedSummaryData.get(data.employeeID);
+                            if (summaryData) {
+                                const fullName = `${data.firstName} ${data.lastName}`;
+                                const employeeStatus = configData.employeeStatuses[fullName] || 'Unknown';
+                                // Calculate working status validity
+                                const totalScheduledHours = data.totalHours;
+                                const isPartTime = employeeStatus === 'PT';
+                                const isFullTime = employeeStatus === 'FT';
+                                let workingStatusValidity = 'Valid';
+                                if (isPartTime) {
+                                    if (totalScheduledHours < 15 || totalScheduledHours > 25) {
+                                        workingStatusValidity = 'Invalid';
+                                    }
+                                } else if (isFullTime) {
+                                    if (totalScheduledHours < 35 || totalScheduledHours > 45) {
+                                        workingStatusValidity = 'Invalid';
+                                    }
+                                }
+                                if (!isPartTime && !isFullTime) {
+                                    workingStatusValidity = 'Unknown';
+                                }
+                                mergedData.push({
+                                    employeeID: data.employeeID,
+                                    firstName: data.firstName,
+                                    lastName: data.lastName,
+                                    employeeStatus,
+                                    actualRegularHours: summaryData.regularHours,
+                                    actualOtHours: summaryData.otHours,
+                                    actualHolidayHours: summaryData.holidayHours,
+                                    actualPersonalHours: summaryData.personalHours,
+                                    actualSickHours: summaryData.sickHours,
+                                    totalScheduledHours: data.totalHours,
+                                    ...locationColumns.reduce((acc, col) => {
+                                        acc[col] = data[col];
+                                        return acc;
+                                    }, {}),
+                                    workingStatusValidity,
+                                });
+                            }
+                        });
+
+                        // Append merged data for this location to the overall list
+                        allMergedData.push(...mergedData);
+                    }
+
+                    console.log('All Merged Data:', allMergedData);
+                    return allMergedData;
+                }
+
+                
+                function refreshPlot() {
+                    console.log(shifts_results)
+                    const categories = Object.keys(shifts_results);
+                    const categoryVisibility = {};
+                    categories.forEach(cat => {
+                        categoryVisibility[cat] = document.getElementById(`show-${cat}`).checked;
+                    });
+                    console.log('Refreshing plot...');
+
+                    const employeesVisible = Array.from(document.querySelectorAll('#employee-toggles input[type="checkbox"]'))
+                        .filter(checkbox => checkbox.checked)
+                        .map(checkbox => checkbox.id.replace('toggle-', '').replace(/-/g, ' '));
+
+
+
+                    // Collect all unique dates
+                    const allDates = new Set();
+                    categories.forEach(category => {
+                        shifts_results[category].forEach(shift => {
+                            s1 = new Date(shift.scheduledStart);
+                            s2 = new Date(shift.scheduledEnd);
+                            allDates.add(s1.toDateString());
+                            allDates.add(s2.toDateString());
+                        });
+                    });
+                    const sortedDates = Array.from(allDates).sort((a, b) => new Date(a) - new Date(b));
+                    const dateIndexMap = sortedDates.reduce((acc, date, index) => ({ ...acc, [date]: index }), {});
+                    // Define resources as dates
+                    const resources = sortedDates.map(date => ({
+                        id: date,
+                        title: date
+                    }));
+                    
+
+                    // Define colors
+                    const colors = {
+                        correctlyCoveredShifts: '#a5d6a7',
+                        lateShifts: '#ffcc80',
+                        missedClockingIn: '#9fa8da',
+                        missedClockingOut: '#9fa8da',
+                        uncoveredShifts: '#ef9a9a'
+                    };
+
+                    // Calculate start and end dates for visible range
+                    let startDate;
+                    let endDate;
+                    if (sortedDates.length > 0) {
+                        startDate = new Date(sortedDates[0]);
+                        endDate = new Date(startDate);
+                        endDate.setDate(startDate.getDate() + 8); // Set end date to one week after start date
+                    }
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'timeGrid', // Shows a weekly calendar with times
+                        headerToolbar: {
+                            left: 'title',
+                            center: '',
+                            right: ''
+                        },
+                        slotMinTime: '00:00:00',
+                        slotMaxTime: '24:00:00',
+                        allDaySlot: false,
+                        visibleRange: {
+                                start: startDate.toISOString().split('T')[0],
+                                end: endDate.toISOString().split('T')[0]
+                        },
+                        eventContent: function(arg) {
+                            const event = arg.event;
+                            const title = event.title;
+                            const timeRange = event.extendedProps.timeRange || ''; // Adjust according to how timeRange is stored
+
+                            // Format title with a line separator
+                            const content = `
+                                <div style="padding: 5px; border-radius: 10px; overflow: hidden; white-space: normal; word-wrap: break-word;">
+                                    <div style="font-size: smaller;">${timeRange}</div>
+                                    <hr style="border: 0; border-top: 1px solid #fff; margin: 5px 0;">
+                                    <div>${title}</div>
+                                </div>
+                            `;
+
+                            return { html: content };
+                        },
+                        eventDidMount: function(info) {
+                            // Styling events
+                            info.el.style.padding = '5px'; 
+                            info.el.style.borderRadius = '10px';
+                            info.el.style.overflow = 'hidden'; // Hide overflow
+                            info.el.style.whiteSpace = 'normal'; // Allow wrapping
+                            info.el.style.wordWrap = 'break-word'; // Ensure long words break and wrap
+                            info.el.style.boxSizing = 'border-box'; // Include padding and border in element's total width and height
+                            // Add specific styles for time
+                            const eventTitle = info.el.querySelector('.fc-event-title');
+                            if (eventTitle) {
+                                eventTitle.style.whiteSpace = 'normal'; // Allow wrapping
+                                eventTitle.style.wordWrap = 'break-word'; // Ensure long words break and wrap
+                            }
+
+
+                        }
+                    });
+
+                    calendar.render();
+
+
+                    categories.forEach(category => {
+                        if (!categoryVisibility[category]) return;
+
+                        shifts_results[category].forEach(shift => {
+                            const fullName = `${shift.empFirst} ${shift.empLast}`.toLowerCase();
+                            if (!employeesVisible.includes(fullName)) return;
+
+                            let now3 = new Date();
+                            const tzoffset3 = now3.getTimezoneOffset() * 60000;
+                            const startDate = new Date(shift.scheduledStart.valueOf() + tzoffset3);
+                            const endDate = new Date(shift.scheduledEnd.valueOf() + tzoffset3);
+                            const color = colors[category];
+                            const adjusted_title = fullName.split(' ').map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()).join(' ');
+                            const minutesLate = Math.round(shift.mins_difference / 60000);
+                            const finalTitle = category === 'lateShifts' ? `${adjusted_title} (Late by ${minutesLate} mins)`: adjusted_title;
+                            // Format full time range
+                            const startTime = startDate.toTimeString().substring(0, 5);
+                            const endTime = endDate.toTimeString().substring(0, 5);
+                            const formattedTimeRange = `${startTime} - ${endTime}`;
+
+
+                            // Add the event to the calendar
+                            calendar.addEvent({
+                                title: `${finalTitle}`,
+                                start: startDate,
+                                end: endDate,
+                                backgroundColor: color,
+                                borderColor: color,
+                                extendedProps: {
+                                title: finalTitle, // Store the formatted title for use in eventContent
+                                timeRange: formattedTimeRange // Store time range to use in eventContent
+                            }
+                            });
+
+
+                        });
+                    });
+                }
+
+
+                function setTimeToDate(date, timeString) {
+                    // Parse the time string to extract hours, minutes, seconds, and milliseconds
+                    const timeParts = timeString.split(':');
+                    const hours = parseInt(timeParts[0], 10);
+                    const minutes = parseInt(timeParts[1], 10);
+                    const secondsAndMs = timeParts[2].split('.');
+                    const seconds = parseInt(secondsAndMs[0], 10);
+                    const milliseconds = parseInt(secondsAndMs[1].slice(0, 3), 10);
+
+                    // Create a new Date object with the same date but updated time
+                    const updatedDate = new Date(date);
+
+                    // Set the extracted time components
+                    updatedDate.setUTCHours(hours, minutes, seconds, milliseconds);
+
+                    return updatedDate;
+                }
+
+                function convertDateString(inputDate) {
+                    // Parse the input date string
+                    const date = inputDate;
+
+                    // Extract year, month, and day
+                    const year = date.getFullYear();
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+                    const day = date.getDate().toString().padStart(2, '0');
+
+                    // Construct the formatted date string
+                    return `${year}-${month}-${day}`;
+                }
+
+
+                function showHoursPlot() {
+                    console.log('Showing employee hours plot...');
+                    if (!scheduleData || !timesheetData) {
+                        alert('Please upload both schedule and timesheet files.');
+                        return;
+                    }
+                    const location = locationSelect.value;
+                    const summaryForLocation = timesheetData[location]?.summarySheet || [];
+
+                    // Ensure required data exists
+                    if (!summaryForLocation.length) {
+                        alert('Incomplete data for the selected location.');
+                        return;
+                    }
+                    hours_results = pre_process_hours(scheduleData, summaryForLocation);
+                    console.log(hours_results);
+
+                    const newWindow = window.open('', '_blank');
+                    let table = '<table>';
+                    // Generate table headers based on keys in the first object of hours_results
+                    if (hours_results.length > 0) {
+                        const headers = Object.keys(hours_results[0]);
+                        table += '<thead><tr>';
+                        headers.forEach(header => {
+                            table += `<th>${header}</th>`;
+                        });
+                        table += '</tr></thead><tbody>';
+
+                        // Generate table rows
+                        hours_results.forEach(result => {
+                            table += '<tr>';
+                            headers.forEach(header => {
+                                table += `<td>${result[header]}</td>`;
+                            });
+                            table += '</tr>';
+                        });
+
+                        table += '</tbody></table>';
+                    } else {
+                        table = '<p>No data available to display.</p>';
+                    }
+
+                    // Write the HTML to the new window
+                    newWindow.document.write(`
+                        <html>
+                            <head>
+                                <title>Employee Hours</title>
+                                <style>
+                                    table {
+                                        width: 100%;
+                                        border-collapse: collapse;
+                                    }
+                                    th, td {
+                                        padding: 8px;
+                                        text-align: left;
+                                        border: 1px solid #ddd;
+                                    }
+                                    th {
+                                        background-color: #f2f2f2;
+                                    }
+                                    tr:nth-child(even) {
+                                        background-color: #f9f9f9;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>Employee Hours Summary</h1>
+                                ${table}
+                            </body>
+                        </html>
+                    `);
+
+                    newWindow.document.close();
+                }
+
+                function showCoverageSummary() {
+                    console.log('Showing employee hours plot...');
+                    if (!scheduleData || !timesheetData) {
+                        alert('Please upload both schedule and timesheet files.');
+                        return;
+                    }
+
+                    const colors = {
+                        correctlyCoveredShifts: '#a5d6a7',
+                        lateShifts: '#ffcc80',
+                        missedClockingIn: '#9fa8da',
+                        missedClockingOut: '#9fa8da',
+                        uncoveredShifts: '#ef9a9a'
+                    };
+
+                    const newWindow = window.open('', '_blank');
+                    // Initialize content for the new window
+                    let content = `
+                        <html>
+                            <head>
+                                <title>Coverage Summary</title>
+                                <style>
+                                    body { font-family: Arial, sans-serif; }
+                                    h1, h2 { text-align: center; }
+                                    .chart-row {
+                                        display: flex;
+                                        justify-content: center;
+                                        flex-wrap: wrap;
+                                        margin: 20px 0;
+                                    }
+                                    .chart-container {
+                                        width: 30%;
+                                        margin: 10px;
+                                        min-width: 300px; /* Ensure minimum size for readability */
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>Coverage Summary</h1>
+                                <div class="chart-row">
+                    `;
+                    configData.hospitalConfigs.forEach(config => {
+                        const hospitalName = config.hospitalName;
+                        console.log('Generating summary for location:', hospitalName);
+                        const scheduleForLocation = scheduleData[hospitalName]?.scheduleSheet || [];
+                        const timesheetForLocation = timesheetData[hospitalName]?.timesheetSheet || [];
+
+                        // Ensure required data exists
+                        if (!scheduleForLocation.length || !timesheetForLocation.length) {
+                            alert('Incomplete data for the selected location.');
+                            return;
+                        }
+
+                        // Call preprocessing function
+                        const shifts_results = pre_process_shifts(scheduleForLocation, timesheetForLocation);
+                        let now = new Date();
+                        const tzoffset = now.getTimezoneOffset() * 60000;
+                        now = new Date(now.valueOf() - tzoffset);
+                        shifts_results.uncoveredShifts = shifts_results.uncoveredShifts.filter(shift => {
+                            const scheduledStart = new Date(shift.scheduledStart);
+                            const scheduledEnd = new Date(shift.scheduledEnd);
+                            // Keep the shift only if both scheduledStart and scheduledEnd are not greater than now
+                            return !(scheduledStart > now || scheduledEnd > now);
+                        });
+                        
+                        // Add a canvas for the pie chart
+                        content += `
+                            <div class="chart-container">
+                                <h2>${hospitalName}</h2>
+                                <canvas id="chart-${hospitalName}"></canvas>
+                            </div>
+                        `;
+                    });
+
+                    // Close HTML and write content to the new window
+                    content += `
+                                </div>
+                            </body>
+                        </html>
+                    `;
+                    newWindow.document.write(content);
+                    newWindow.document.close();
+
+                    // Load Chart.js and render the charts
+                    const script = newWindow.document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                    script.onload = function() {
+                        configData.hospitalConfigs.forEach(config => {
+                            const hospitalName = config.hospitalName;
+                            const shifts_results = pre_process_shifts(scheduleData[hospitalName]?.scheduleSheet || [], timesheetData[hospitalName]?.timesheetSheet || []);
+                            let now = new Date();
+                            const tzoffset = now.getTimezoneOffset() * 60000;
+                            now = new Date(now.valueOf() - tzoffset);
+                            shifts_results.uncoveredShifts = shifts_results.uncoveredShifts.filter(shift => {
+                                const scheduledStart = new Date(shift.scheduledStart);
+                                const scheduledEnd = new Date(shift.scheduledEnd);
+                                // Keep the shift only if both scheduledStart and scheduledEnd are not greater than now
+                                return !(scheduledStart > now || scheduledEnd > now);
+                            });
+                            const ctx = newWindow.document.getElementById(`chart-${hospitalName}`).getContext('2d');
+                            new newWindow.Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: [
+                                        'Correctly Covered Shifts',
+                                        'Late Shifts',
+                                        'Missed Clocking In',
+                                        'Missed Clocking Out',
+                                        'Uncovered Shifts'
+                                    ],
+                                    datasets: [{
+                                        data: [
+                                            shifts_results.correctlyCoveredShifts.length,
+                                            shifts_results.lateShifts.length,
+                                            shifts_results.missedClockingIn.length,
+                                            shifts_results.missedClockingOut.length,
+                                            shifts_results.uncoveredShifts.length
+                                        ],
+                                        backgroundColor: [
+                                            colors.correctlyCoveredShifts,
+                                            colors.lateShifts,
+                                            colors.missedClockingIn,
+                                            colors.missedClockingOut,
+                                            colors.uncoveredShifts
+                                        ]
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Shift Coverage Summary'
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    };
+                    newWindow.document.head.appendChild(script);
+                }
+
+                function handleSelectChange() {
+                    generateReport();
+                }
+
+            });
+        </script>
+    </div>
+</body>
+</html>
