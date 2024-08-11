@@ -283,6 +283,9 @@
                 let scheduleData, timesheetData, configData;
                 let configUploaded = false; // Track if the config file has been uploaded
                 var calendarEl = document.getElementById('calendar');
+                let shifts_results;
+                let hours_results;
+                let report_generated = 'no';
 
                 const category_Filters = document.querySelectorAll('#category-filters input[type="checkbox"]');
                 category_Filters.forEach(checkbox => {
@@ -547,9 +550,7 @@
                     });
                 }
 
-                let shifts_results;
-                let hours_results;
-                let report_generated = 'no';
+
                 function generateReport() {
                     if (!scheduleData || !timesheetData) {
                         alert('Please upload both schedule and timesheet files.');
